@@ -1,8 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.breadboy.android.imageviewer"
         minSdkVersion 21
@@ -24,7 +27,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // Dagger2
     compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.dagger:dagger:2.11'
     testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.2'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+}
+repositories {
+    mavenCentral()
 }
