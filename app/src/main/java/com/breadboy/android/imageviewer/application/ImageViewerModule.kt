@@ -1,7 +1,8 @@
 package com.breadboy.android.imageviewer.application
 
 import com.breadboy.android.imageviewer.ComponentBuilder
-import com.breadboy.android.imageviewer.imagelist.ImageListActivity
+import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
+import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -11,7 +12,7 @@ import dagger.multibindings.IntoMap
  */
 
 @Module(subcomponents = arrayOf(ImageListComponent::class))
-class ImageViewerModule {
+abstract class ImageViewerModule {
 
     @Binds
     @IntoMap

@@ -1,4 +1,4 @@
-package com.breadboy.android.imageviewer.base
+package com.breadboy.android.imageviewer.base.di
 
 import android.app.Activity
 import dagger.Module

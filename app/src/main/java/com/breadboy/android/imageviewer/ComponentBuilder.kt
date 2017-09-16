@@ -1,7 +1,7 @@
 package com.breadboy.android.imageviewer
 
-import com.breadboy.android.imageviewer.base.BaseComponent
-import com.breadboy.android.imageviewer.base.BaseModule
+import com.breadboy.android.imageviewer.base.di.BaseComponent
+import com.breadboy.android.imageviewer.base.di.BaseModule
 
 /**
  * Created by N4039 on 2017-09-15.
