@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.breadboy.android.imageviewer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.ImageViewerApplication"
         android:allowBackup="true"

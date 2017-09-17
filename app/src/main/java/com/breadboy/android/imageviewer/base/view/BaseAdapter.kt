@@ -7,10 +7,13 @@ import android.support.v7.widget.RecyclerView
  */
 abstract class BaseAdapter<VH: RecyclerView.ViewHolder, T> : RecyclerView.Adapter<VH>() {
 
-    private val mutableItemList: MutableList<T> = arrayListOf()
+    protected val mutableItemList: MutableList<T> = arrayListOf()
 
     fun addItem(item: T) = mutableItemList.add(item)
-    fun addAllItems(items: List<T>) = mutableItemList.addAll(items)
+    fun addAllItems(items: List<T>) {
+        mutableItemList.addAll(items)
+        notifyDataSetChanged()
+    }
 
     fun removeItem(item: T) = mutableItemList.remove(item)
     fun clearItem() = mutableItemList.clear()

@@ -6,4 +6,5 @@ package com.breadboy.android.imageviewer.data
 
 data class ThumbImage(
         var name: String?,
-        var uri: String?) : Image
+        var uri: String?,
+        var href: String?) : Image

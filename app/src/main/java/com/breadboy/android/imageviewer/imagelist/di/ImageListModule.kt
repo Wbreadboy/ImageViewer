@@ -22,13 +22,13 @@ class ImageListModule(var imageListActivity: ImageListActivity) : BaseModule<Ima
 
     @ActivityScope
     @Provides
-    fun provideImageListPresenter() = ImageListPresenter()
+    fun provideImageListPresenter(imageListActivity: ImageListActivity) = ImageListPresenter(imageListActivity)
 
     @ActivityScope
     @Provides
-    fun provideImageListAdapter() = ImageListAdapter()
+    fun provideImageListAdapter(imageListActivity: ImageListActivity) = ImageListAdapter(imageListActivity)
 
     @ActivityScope
     @Provides
-    fun provideImageListGridLayoutManager() = StaggeredGridLayoutManager(3, 1)
+    fun provideImageListGridLayoutManager() = StaggeredGridLayoutManager(2, 1)
 }

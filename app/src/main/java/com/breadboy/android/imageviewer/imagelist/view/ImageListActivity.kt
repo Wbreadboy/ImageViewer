@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
 import com.breadboy.android.imageviewer.base.view.BaseActivity
+import com.breadboy.android.imageviewer.data.ThumbImage
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
 import com.breadboy.android.imageviewer.imagelist.di.ImageListModule
@@ -62,5 +63,9 @@ class ImageListActivity : ImageListContract.View() {
                 }
             })
         }
+    }
+
+    fun setImageDataToRecyclerView(imageDataList: List<ThumbImage>) {
+        imageListAdapter.addAllItems(imageDataList)
     }
 }
