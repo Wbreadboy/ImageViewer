@@ -1,12 +1,15 @@
 package com.breadboy.android.imageviewer.imagelist.presenter
 
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.breadboy.android.imageviewer.data.ThumbImage
+import com.breadboy.android.imageviewer.detailedimage.DetailedImageActivity
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.jsoup.Jsoup
 import javax.inject.Inject
@@ -25,37 +28,57 @@ constructor(val imageListActivity: ImageListActivity) : ImageListContract.Presen
         parseFromWebSite()
     }
 
-    override fun parseFromWebSite() {
-        Flowable.create<List<ThumbImage>>({ emitter ->
-            Log.e("!!!!!!!!!!!!!!", "connecting...")
-            val doc = Jsoup.connect("http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx").get()
-            Log.e("!!!!!!!!!!!!!!", "connect complete!")
-
-            Log.e("!!!!!!!!!!!!!!", "selecting...")
-            val imgUris = doc.body().select("a[href^=\"/Picture-Library/Image.aspx?id=\"]")
-            Log.e("!!!!!!!!!!!!!!", "select complete!")
-
-            imgUris.filter { it.hasText() }
-                    .forEach { imgUri ->
-                        imgUris.select("a[href=\"${imgUri.attr("href")}\"]").first()
+    override fun parseFromWebSite() =
+        Flowable.create<List<ThumbImage>>({
+            Jsoup.connect("http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx")
+                    .get()
+                    .body().select("a[href^=\"/Picture-Library/Image.aspx?id=\"]")
+                    .let {
+                        it.filter { it.hasText() }
+                          .forEach { imgUri ->
+                              it.select("a[href=\"${imgUri.attr("href")}\"]")
+                                .first()
                                 .let {
                                     mutableThumbImageList.add(ThumbImage(imgUri.text(), it.select("img").attr("abs:src"), imgUri.attr("abs:href")))
                                 }
+                          }
                     }
 
-            emitter.onNext(mutableThumbImageList)
-            emitter.onComplete()
+            it.onNext(mutableThumbImageList)
+            it.onComplete()
         }, BackpressureStrategy.BUFFER)
+                .doOnSubscribe { imageListActivity.visibleProgressBar() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    imageListActivity.setImageDataToRecyclerView(it.take(15))
-                }, {
-                    Log.e("$javaClass [parseFromWebSite()] : ", "${it.printStackTrace()}")
-                })
-    }
+                .subscribe(
+                        { imageListActivity.addImagesToRecyclerView(it.take(15)) },
+                        { Log.e("$javaClass [parseFromWebSite()] : ", "${it.printStackTrace()}") },
+                        { imageListActivity.goneProgressBar() })
 
-    fun loadMoreImageData() {
+    fun loadMoreImages(page: Long) =
+            Flowable.fromIterable(mutableThumbImageList)
+                    .buffer(15)
+                    .elementAt(page)
+                    .doOnSubscribe { imageListActivity.isMoreLoading = true }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                imageListActivity.apply {
+                                    addImagesToRecyclerView(it)
+                                    isMoreLoading = false
+                                }
 
+                                Log.e("!!!!!!!!!!!!!!!!!", "page : $page")
+                            },
+                            {
+                                imageListActivity.isMoreLoading = false
+
+                                Log.e("$javaClass [loadMoreImages()] : ", "${it.printStackTrace()}")
+                            },
+                            { imageListActivity.isMoreLoading = false })
+
+    fun clickedImageItem(item: ThumbImage) {
+        imageListActivity.startActivity(DetailedImageActivity().activityOwnIntent(imageListActivity, item))
     }
 }

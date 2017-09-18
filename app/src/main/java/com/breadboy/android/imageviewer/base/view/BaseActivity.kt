@@ -1,5 +1,7 @@
 package com.breadboy.android.imageviewer.base.view
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
 
@@ -17,4 +19,8 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     }
 
     abstract fun setupActivityComponent()
+
+    abstract fun activityOwnIntent(context: Context, T: Any): Any
+
+    abstract fun startActivityFromIntent(intent: Intent)
 }

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">ImageViewer</string>
-    <string name="title_activity_image_list">ImageViewer</string>
+	<string name="app_name">ImageViewer</string>
+	<string name="title_activity_image_list">ImageViewer</string>
 </resources>

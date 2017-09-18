@@ -3,6 +3,7 @@ package com.breadboy.android.imageviewer.imagelist
 import android.util.Log
 import com.breadboy.android.imageviewer.base.presenter.BasePresenter
 import com.breadboy.android.imageviewer.base.view.BaseActivity
+import io.reactivex.disposables.Disposable
 import org.jsoup.Jsoup
 
 /**
@@ -14,6 +15,6 @@ interface ImageListContract {
 
     interface Presenter : BasePresenter {
 
-        fun parseFromWebSite()
+        fun parseFromWebSite(): Disposable
     }
 }
