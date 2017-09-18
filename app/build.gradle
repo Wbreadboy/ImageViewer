@@ -51,6 +51,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0'
     kapt 'com.github.bumptech.glide:compiler:4.0.0'
 
+    // Retrofit2
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
     // Jsoup
     compile 'org.jsoup:jsoup:1.10.3'
 }

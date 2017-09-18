@@ -1,4 +1,4 @@
-package com.breadboy.android.imageviewer.detailedimage
+package com.breadboy.android.imageviewer.detailedimage.view
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,12 @@ import android.view.View
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.GlideApp
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
+import com.breadboy.android.imageviewer.data.DetailedImage
 import com.breadboy.android.imageviewer.data.ThumbImage
+import com.breadboy.android.imageviewer.detailedimage.DetailedImageContract
+import com.breadboy.android.imageviewer.detailedimage.presenter.DetailedImagePresenter
+import com.breadboy.android.imageviewer.detailedimage.di.DetailedImageComponent
+import com.breadboy.android.imageviewer.detailedimage.di.DetailedImageModule
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -54,7 +59,7 @@ class DetailedImageActivity : DetailedImageContract.view() {
         GlideApp.with(this)
                 .load(uri)
                 .placeholder(android.R.drawable.screen_background_light)
-                .thumbnail(0.05f)
+                .thumbnail(0.1f)
                 .fitCenter()
                 .listener(object : RequestListener<Drawable> {
                     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {

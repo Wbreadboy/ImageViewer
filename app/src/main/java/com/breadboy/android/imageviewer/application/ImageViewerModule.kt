@@ -1,8 +1,8 @@
 package com.breadboy.android.imageviewer.application
 
 import com.breadboy.android.imageviewer.ComponentBuilder
-import com.breadboy.android.imageviewer.detailedimage.DetailedImageActivity
-import com.breadboy.android.imageviewer.detailedimage.DetailedImageComponent
+import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
+import com.breadboy.android.imageviewer.detailedimage.di.DetailedImageComponent
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
 import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
 import dagger.Binds

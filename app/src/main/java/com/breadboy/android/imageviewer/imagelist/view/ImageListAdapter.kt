@@ -42,10 +42,11 @@ constructor(val imageListActivity: ImageListActivity): BaseAdapter<ImageListView
     }
 
     private fun setViewInCardView(holder: ImageListViewHolder?, position: Int) {
-        holder?.imageListCardView?.setOnClickListener { onItemClickListener(mutableItemList[position]) }
-    }
+        holder?.imageListCardView?.setOnClickListener { onItemClickListener(mutableItemList[position]) } }
 
     private fun setImageInImageView(holder: ImageListViewHolder?, position: Int) {
+        visibleProgressBar(holder)
+
         GlideApp.with(imageListActivity)
                 .load(mutableItemList[position].uri)
                 .placeholder(android.R.drawable.screen_background_light)
@@ -53,11 +54,12 @@ constructor(val imageListActivity: ImageListActivity): BaseAdapter<ImageListView
                 .fitCenter()
                 .listener(object : RequestListener<Drawable> {
                     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
+                        goneProgressBar(holder)
                         return false
                     }
 
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        goneProgressBar(holder)
                         Log.e("$javaClass [setImageInImageView()] : ", "${e?.printStackTrace()}")
 
                         return false
@@ -67,12 +69,11 @@ constructor(val imageListActivity: ImageListActivity): BaseAdapter<ImageListView
                 .into(holder?.imageListImageView)
     }
 
+    private fun setNameInTextView(holder: ImageListViewHolder?, position: Int) { holder?.imageListTextView?.text = mutableItemList[position].name }
 
-    private fun setNameInTextView(holder: ImageListViewHolder?, position: Int) {
-        holder?.imageListTextView?.text = mutableItemList[position].name
-    }
+    private fun visibleProgressBar(holder: ImageListViewHolder?) { holder?.imageListProgressBar?.visibility = View.VISIBLE }
 
-    override fun onItemClickListener(item: ThumbImage) {
-        imageListActivity.imageListPresenter.clickedImageItem(item)
-    }
+    private fun goneProgressBar(holder: ImageListViewHolder?) { holder?.imageListProgressBar?.visibility = View.GONE }
+
+    override fun onItemClickListener(item: ThumbImage) { imageListActivity.imageListPresenter.clickedImageItem(item) }
 }

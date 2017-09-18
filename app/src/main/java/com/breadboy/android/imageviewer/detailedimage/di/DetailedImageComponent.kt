@@ -1,8 +1,9 @@
-package com.breadboy.android.imageviewer.detailedimage
+package com.breadboy.android.imageviewer.detailedimage.di
 
 import com.breadboy.android.imageviewer.ActivityScope
 import com.breadboy.android.imageviewer.ComponentBuilder
 import com.breadboy.android.imageviewer.base.di.BaseComponent
+import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
 import dagger.Subcomponent
 
 /**

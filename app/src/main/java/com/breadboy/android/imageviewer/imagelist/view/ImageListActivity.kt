@@ -12,6 +12,7 @@ import android.view.View
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
 import com.breadboy.android.imageviewer.base.view.BaseActivity
+import com.breadboy.android.imageviewer.data.DetailedImage
 import com.breadboy.android.imageviewer.data.ThumbImage
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
@@ -31,6 +32,10 @@ class ImageListActivity : ImageListContract.View() {
 
     @Inject
     lateinit var imageListGridLayoutManager: StaggeredGridLayoutManager
+
+    companion object {
+       val detailedImageHashMap = hashMapOf<String, DetailedImage>()
+    }
 
     var page: Long = 1
     var isMoreLoading = false

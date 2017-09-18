@@ -1,7 +1,10 @@
-package com.breadboy.android.imageviewer.detailedimage
+package com.breadboy.android.imageviewer.detailedimage.di
 
 import com.breadboy.android.imageviewer.ActivityScope
 import com.breadboy.android.imageviewer.base.di.BaseModule
+import com.breadboy.android.imageviewer.data.DetailedImage
+import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
+import com.breadboy.android.imageviewer.detailedimage.presenter.DetailedImagePresenter
 import dagger.Module
 import dagger.Provides
 

@@ -3,6 +3,7 @@ package com.breadboy.android.imageviewer.imagelist.di
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.breadboy.android.imageviewer.ActivityScope
 import com.breadboy.android.imageviewer.base.di.BaseModule
+import com.breadboy.android.imageviewer.data.DetailedImage
 import com.breadboy.android.imageviewer.imagelist.presenter.ImageListPresenter
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
 import com.breadboy.android.imageviewer.imagelist.view.ImageListAdapter
