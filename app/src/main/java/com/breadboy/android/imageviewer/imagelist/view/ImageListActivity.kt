@@ -9,13 +9,12 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
-import com.breadboy.android.imageviewer.data.DetailedImage
-import com.breadboy.android.imageviewer.data.ThumbImage
+import com.breadboy.android.imageviewer.data.image.DetailedImage
+import com.breadboy.android.imageviewer.data.image.ThumbImage
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
 import com.breadboy.android.imageviewer.imagelist.di.ImageListModule
 import com.breadboy.android.imageviewer.imagelist.presenter.ImageListPresenter
-import com.breadboy.android.imageviewer.intro.IntroActivity
 import kotlinx.android.synthetic.main.activity_image_list.*
 import kotlinx.android.synthetic.main.content_image_list.*
 import javax.inject.Inject

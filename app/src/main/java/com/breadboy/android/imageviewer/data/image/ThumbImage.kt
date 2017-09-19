@@ -1,4 +1,4 @@
-package com.breadboy.android.imageviewer.data
+package com.breadboy.android.imageviewer.data.image
 
 import java.io.Serializable
 

@@ -1,16 +1,11 @@
 package com.breadboy.android.imageviewer.intro
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
 import com.breadboy.android.imageviewer.R
-import com.breadboy.android.imageviewer.data.ThumbImage
-import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
-import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

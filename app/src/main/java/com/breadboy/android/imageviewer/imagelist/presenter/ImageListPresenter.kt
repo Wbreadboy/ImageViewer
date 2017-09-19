@@ -1,20 +1,19 @@
 package com.breadboy.android.imageviewer.imagelist.presenter
 
 import android.util.Log
-import com.breadboy.android.imageviewer.data.ThumbImage
+import com.breadboy.android.imageviewer.data.image.ThumbImage
 import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
 import com.breadboy.android.imageviewer.intro.IntroActivity
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.content_image_list.*
 import org.jsoup.Jsoup
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -33,7 +32,7 @@ constructor(val imageListActivity: ImageListActivity) : ImageListContract.Presen
     }
 
     fun startIntroActivity(): Disposable {
-        return Single.just(IntroActivity().activityOwnIntent(imageListActivity))
+        return Maybe.just(IntroActivity().activityOwnIntent(imageListActivity))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -50,6 +49,7 @@ constructor(val imageListActivity: ImageListActivity) : ImageListContract.Presen
             var href: String? = null
 
             Jsoup.connect("http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx")
+                    .timeout(5000)
                     .get()
                     .body()
                     .select("a[href^=\"/Picture-Library/Image.aspx?id=\"]")

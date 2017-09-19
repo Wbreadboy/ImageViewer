@@ -1,7 +1,6 @@
 package com.breadboy.android.imageviewer.imagelist.view
 
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,11 @@ import android.view.ViewGroup
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.GlideApp
 import com.breadboy.android.imageviewer.base.view.BaseAdapter
-import com.breadboy.android.imageviewer.base.view.BaseViewHolder
-import com.breadboy.android.imageviewer.data.ThumbImage
-import com.bumptech.glide.Glide
+import com.breadboy.android.imageviewer.data.image.ThumbImage
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import kotlinx.android.synthetic.main.cardview_image_list.*
 import javax.inject.Inject
 
 /**

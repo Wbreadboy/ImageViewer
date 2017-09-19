@@ -1,7 +1,7 @@
 package com.breadboy.android.imageviewer.detailedimage.presenter
 
 import android.util.Log
-import com.breadboy.android.imageviewer.data.DetailedImage
+import com.breadboy.android.imageviewer.data.image.DetailedImage
 import com.breadboy.android.imageviewer.detailedimage.DetailedImageContract
 import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
@@ -42,6 +42,7 @@ constructor(val detailedImageActivity: DetailedImageActivity): DetailedImageCont
                 }
             } else {
                 Jsoup.connect(thumbImage.href)
+                        .timeout(5000)
                         .get()
                         .body()
                         .select("img[class=\"innerImage\"], p:eq(4)")
