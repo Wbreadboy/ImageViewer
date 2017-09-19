@@ -1,8 +1,6 @@
 package com.breadboy.android.imageviewer.detailedimage.presenter
 
-import android.system.Os
 import android.util.Log
-import com.breadboy.android.imageviewer.application.ImageViewerApplication
 import com.breadboy.android.imageviewer.data.DetailedImage
 import com.breadboy.android.imageviewer.detailedimage.DetailedImageContract
 import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
@@ -13,12 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.jsoup.Jsoup
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URI
-import java.net.URL
-import java.nio.charset.Charset
 import javax.inject.Inject
 
 /**
@@ -52,7 +44,7 @@ constructor(val detailedImageActivity: DetailedImageActivity): DetailedImageCont
                 Jsoup.connect(thumbImage.href)
                         .get()
                         .body()
-                        .select("img[class=\"innerimage\"], p:eq(4)")
+                        .select("img[class=\"innerImage\"], p:eq(4)")
                         .let {
                             for (element in it) {
                                 if (!element.hasText()) uri = element.attr("abs:src")

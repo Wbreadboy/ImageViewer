@@ -23,7 +23,9 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".intro.IntroActivity"/>
+		<activity
+			android:name=".intro.IntroActivity"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 		<activity android:name=".detailedimage.view.DetailedImageActivity">
 		</activity>
 	</application>

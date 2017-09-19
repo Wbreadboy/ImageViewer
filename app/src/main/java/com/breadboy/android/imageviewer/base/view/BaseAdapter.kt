@@ -13,14 +13,20 @@ abstract class BaseAdapter<VH: RecyclerView.ViewHolder, T> : RecyclerView.Adapte
     fun addItem(item: T) = mutableItemList.add(item)
 
     fun addAllItems(items: List<T>) {
-        val position = mutableItemList.size
-        mutableItemList.addAll(items)
-        notifyItemRangeInserted(position, items.size)
+        mutableItemList.size.let {
+            mutableItemList.addAll(items)
+            notifyItemRangeInserted(it, items.size)
+        }
     }
 
     fun removeItem(item: T) = mutableItemList.remove(item)
 
-    fun clearItem() = mutableItemList.clear()
+    fun clearItem() {
+        mutableItemList.size.let {
+            mutableItemList.clear()
+            notifyItemRangeRemoved(0, it)
+        }
+    }
 
     override fun getItemCount() = mutableItemList.count()
 

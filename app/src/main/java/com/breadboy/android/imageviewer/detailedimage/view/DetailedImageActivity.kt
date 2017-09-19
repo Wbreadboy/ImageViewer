@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.BaseAdapter
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.GlideApp
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
@@ -15,6 +16,7 @@ import com.breadboy.android.imageviewer.detailedimage.DetailedImageContract
 import com.breadboy.android.imageviewer.detailedimage.presenter.DetailedImagePresenter
 import com.breadboy.android.imageviewer.detailedimage.di.DetailedImageComponent
 import com.breadboy.android.imageviewer.detailedimage.di.DetailedImageModule
+import com.breadboy.android.imageviewer.imagelist.view.ImageListViewHolder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -35,10 +37,21 @@ class DetailedImageActivity : DetailedImageContract.view() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_detailed_image)
-        setupActivityComponent()
 
-        detailedImagePresenter.start()
+        setupActivityComponent()
+        setupPresenter()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        finish()
+        overridePendingTransition(R.anim.fast_fade_in, R.anim.fast_fade_out)
+    }
+
+    override fun activityOwnIntent(context: Context, T: Any): Intent = Intent(context, javaClass).putExtra(DETAILED_EXTRA, T as ThumbImage)
+
+    override fun startActivityFromIntent(intent: Intent) { startActivity(intent) }
 
     override fun setupActivityComponent() {
         (ImageViewerApplication[this].getComponentBuilder(DetailedImageActivity::class.java) as DetailedImageComponent.Builder)
@@ -47,11 +60,7 @@ class DetailedImageActivity : DetailedImageContract.view() {
                 .injectMembers(this)
     }
 
-    override fun activityOwnIntent(context: Context, T: Any): Intent = Intent(context, javaClass).putExtra(DETAILED_EXTRA, T as ThumbImage)
-
-    override fun startActivityFromIntent(intent: Intent) {
-        startActivity(intent)
-    }
+    fun setupPresenter() = detailedImagePresenter.start()
 
     fun detailedActivityExtra() = this.intent.getSerializableExtra(DETAILED_EXTRA) as ThumbImage
 
@@ -70,6 +79,7 @@ class DetailedImageActivity : DetailedImageContract.view() {
 
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                         goneProgressBar()
+
                         Log.e("$javaClass [setImageInImageView()] : ", "${e?.printStackTrace()}")
 
                         return false

@@ -2,22 +2,20 @@ package com.breadboy.android.imageviewer.imagelist.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.View
 import com.breadboy.android.imageviewer.R
 import com.breadboy.android.imageviewer.application.ImageViewerApplication
-import com.breadboy.android.imageviewer.base.view.BaseActivity
 import com.breadboy.android.imageviewer.data.DetailedImage
 import com.breadboy.android.imageviewer.data.ThumbImage
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.di.ImageListComponent
 import com.breadboy.android.imageviewer.imagelist.di.ImageListModule
 import com.breadboy.android.imageviewer.imagelist.presenter.ImageListPresenter
+import com.breadboy.android.imageviewer.intro.IntroActivity
 import kotlinx.android.synthetic.main.activity_image_list.*
 import kotlinx.android.synthetic.main.content_image_list.*
 import javax.inject.Inject
@@ -44,18 +42,26 @@ class ImageListActivity : ImageListContract.View() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_image_list)
+        setSupportActionBar(toolbar_activity_imagelist)
 
         setupActivityComponent()
+
+        imageListPresenter.startIntroActivity()
+
+        setupSwipeRefreshLayout()
         setupRecyclerView()
-
-        val toolbar = toolbar_activity_imagelist
-        setSupportActionBar(toolbar)
-
         setupPresenter()
     }
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun activityOwnIntent(context: Context, T: Any) {}
+
+    override fun startActivityFromIntent(intent: Intent) {
+        startActivity(intent)
+        overridePendingTransition(R.anim.fast_fade_in, R.anim.fast_fade_out)
     }
 
     override fun setupActivityComponent() {
@@ -65,9 +71,23 @@ class ImageListActivity : ImageListContract.View() {
                 .injectMembers(this)
     }
 
-    override fun activityOwnIntent(context: Context, T: Any) {}
+    private fun setupSwipeRefreshLayout() {
+        swiperefreshlayout_activity_imagelist.setOnRefreshListener(onRefreshImageListListener())
+    }
 
+    private fun onRefreshImageListListener() =
+            SwipeRefreshLayout.OnRefreshListener {
+                isMoreLoading = true
+                clearDatasForRefresh()
 
+                imageListPresenter.start()
+            }
+
+    private fun clearDatasForRefresh() {
+        imageListAdapter.clearItem()
+        imageListPresenter.mutableThumbImageList.clear()
+        page = 1
+    }
 
     private fun setupRecyclerView() {
         recyclerview_image_list_activity.apply {
@@ -76,10 +96,6 @@ class ImageListActivity : ImageListContract.View() {
 
             addOnScrollListener(onScrollAndMoreListener())
         }
-    }
-
-    override fun startActivityFromIntent(intent: Intent) {
-        startActivity(intent)
     }
 
     private fun setupPresenter() = imageListPresenter.start()
@@ -99,15 +115,11 @@ class ImageListActivity : ImageListContract.View() {
                 }
     }
 
-    fun addImagesToRecyclerView(imageDataList: List<ThumbImage>) {
-        imageListAdapter.addAllItems(imageDataList)
-    }
+    fun addImagesToRecyclerView(imageDataList: List<ThumbImage>) { imageListAdapter.addAllItems(imageDataList) }
 
-    fun visibleProgressBar() {
-        progressbar_image_list_activity.visibility = View.VISIBLE
-    }
+    fun visibleProgressBar() { progressbar_image_list_activity.visibility = View.VISIBLE }
 
-    fun goneProgressBar() {
-        progressbar_image_list_activity.visibility = View.GONE
-    }
+    fun goneProgressBar() { progressbar_image_list_activity.visibility = View.GONE }
+
+    fun goneSwipeRefreshLayout() { swiperefreshlayout_activity_imagelist.isRefreshing = false }
 }
