@@ -16,6 +16,7 @@ import javax.inject.Inject
 /**
  * Created by N4039 on 2017-09-18.
  */
+
 class DetailedImagePresenter
 
 @Inject

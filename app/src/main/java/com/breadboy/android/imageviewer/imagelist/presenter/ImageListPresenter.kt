@@ -6,10 +6,7 @@ import com.breadboy.android.imageviewer.detailedimage.view.DetailedImageActivity
 import com.breadboy.android.imageviewer.imagelist.ImageListContract
 import com.breadboy.android.imageviewer.imagelist.view.ImageListActivity
 import com.breadboy.android.imageviewer.intro.IntroActivity
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -42,6 +39,12 @@ constructor(val imageListActivity: ImageListActivity) : ImageListContract.Presen
 
     override fun parseFromWebSite(): Disposable {
         imageListActivity.visibleProgressBar()
+        Flowable.create<List<ThumbImage>>(object : FlowableOnSubscribe<List<ThumbImage>> {
+            override fun subscribe(e: FlowableEmitter<List<ThumbImage>>) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        }, BackpressureStrategy.BUFFER)
 
         return Flowable.create<List<ThumbImage>>({
             var uri: String? = null
